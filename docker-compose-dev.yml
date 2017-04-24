@@ -1,0 +1,52 @@
+data:
+  build: .docker-containers/data
+  restart: "no"
+  env_file: 
+    - .docker-env/dev/common.env
+db:
+  build: .docker-containers/db
+  restart: "no"
+  env_file:
+    - .docker-env/dev/common.env
+    - .docker-env/dev/db.env
+  volumes_from:
+    - data
+memcached:
+  build: .docker-containers/memcached
+  restart: "no"
+  env_file:
+    - .docker-env/dev/common.env
+  command: memcached -m 128
+web:
+  build: .
+  restart: "no"
+  env_file:
+    - .docker-env/dev/common.env
+    - .docker-env/dev/web.env
+  environment:
+    - PYTHONUNBUFFERED=1 # Development only!
+  volumes: # Development only!
+    - .:/app
+    - ./media:/app/media
+    - ./tmp:/app/tmp
+    - ./logs:/app/logs
+    - ./static:/app/static
+    - /usr/local/lib/python3.5/site-packages/
+  volumes_from:
+    - data
+  expose:
+    - "3031"
+  links:
+    - memcached
+  command: uwsgi --socket=:3031 --py-autoreload=3 --processes=2 --uid=root --gid=root --harakiri=60 --max-requests=10000 --post-buffering=8192 --chdir=/app --module=project.wsgi:application --master --pidfile=/tmp/uwsgi.pid --vacuum --die-on-term --disable-logging --logdate --log-5xx --log-slow=5000
+nginx:
+  build: .docker-containers/nginx
+  restart: "no"
+  env_file:
+    - .docker-env/dev/common.env
+  volumes_from:
+    - web
+  ports:
+    - "8055:80"
+  links:
+    - web

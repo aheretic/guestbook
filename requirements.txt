@@ -1,0 +1,9 @@
+Django==1.11
+django-debug-toolbar==1.7
+djangorestframework
+uwsgi
+pylibmc==1.5.2
+pyinotify
+pytz
+psycopg2
+ipython

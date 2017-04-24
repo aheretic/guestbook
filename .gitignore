@@ -1,0 +1,12 @@
+*.pyo
+*.pyc
+*.orig
+*.pid
+*.sqlite3
+*~
+.idea
+.DS_Store
+*_local.py
+/static/*
+/media/*
+/.docker-env/prod
