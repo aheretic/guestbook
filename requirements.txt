@@ -1,9 +1,10 @@
 Django==1.11
 django-debug-toolbar==1.7
-djangorestframework
+djangorestframework==3.6.2
 uwsgi
 pylibmc==1.5.2
 pyinotify
 pytz
 psycopg2
 ipython
+httpie

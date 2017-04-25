@@ -16,7 +16,9 @@ class BaseProjectModel(models.Model):
 
 
 class CustomUser(AbstractUser, BaseProjectModel):
-
+    """
+    Кастомная модель юзера
+    """
     pass
 
 
@@ -30,6 +32,7 @@ class Review(BaseProjectModel):
     class Meta:
         verbose_name = "Review"
         verbose_name_plural = "Reviews"
+        ordering = ["-created_at"]
 
     def __str__(self):
         return str(self.id)
@@ -39,8 +42,8 @@ class Reply(BaseProjectModel):
     """
     Модель ответов на отзывы в гостевой книге
     """
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
     text = models.TextField("Reply text")
 
     class Meta:
