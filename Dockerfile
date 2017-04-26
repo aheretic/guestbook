@@ -1,4 +1,4 @@
-FROM python:3.5
+FROM python:2.7
 
 RUN groupadd -r docker && useradd -r -g docker docker
 
@@ -32,4 +32,4 @@ RUN chown -R docker:docker /app
 
 WORKDIR /app
 
-CMD ["python3"]
+CMD ["python"]

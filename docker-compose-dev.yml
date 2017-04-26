@@ -31,7 +31,7 @@ web:
     - ./tmp:/app/tmp
     - ./logs:/app/logs
     - ./static:/app/static
-    - /usr/local/lib/python3.5/site-packages/
+    - /usr/local/lib/python2.7/site-packages/
   volumes_from:
     - data
   expose:
