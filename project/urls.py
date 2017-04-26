@@ -1,3 +1,4 @@
+# coding: utf-8
 """simple_task_manager URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -19,20 +20,21 @@ from django.contrib import admin
 
 from rest_framework import routers, urls
 from guestbook import views
+from oauth2_provider import urls
 
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r"reviews", views.ReviewViewSet)
 router.register(r"replies", views.ReplyViewSet)
-router.register(r"users", views.UserViewSet)
 
 
 urlpatterns = [
     url(r"^admin/", admin.site.urls),
-    url(r"^", include("guestbook.urls", namespace="guestbook"), ), #TODO $?
+    url(r"^", include("guestbook.urls", namespace="guestbook"), ),
     url(r"^api/", include(router.urls)),
-    url(r"^api-auth/", include("rest_framework.urls", namespace="rest_framework"))
+    url(r"^api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+    url(r"^oauth2/", include("oauth2_provider.urls", namespace="oauth2_provider")),
 ]
 
 if settings.DEBUG:

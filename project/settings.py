@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "guestbook",
+    "oauth2_provider",
 ]
 
 MIDDLEWARE = [
@@ -218,16 +219,24 @@ if DEBUG:
 
 AUTH_USER_MODEL = "guestbook.CustomUser"
 from django.core.urlresolvers import reverse_lazy
-# LOGOUT_REDIRECT_URL = reverse_lazy("core:login")
-# LOGIN_URL = reverse_lazy("core:login")
-# LOGIN_REDIRECT_URL = reverse_lazy("core:project_list")
+# LOGOUT_REDIRECT_URL = reverse_lazy("guestbook:login")
+# LOGIN_URL = reverse_lazy("guestbook:login")
+# LOGIN_REDIRECT_URL = reverse_lazy("guestbook:review_list")
 
-
+OAUTH2_PROVIDER = {
+    "SCOPES": {"read": "Read scope", "write": "Write scope", "users": "Access to users"}
+}
+from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly, IsAuthenticated
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+        # "rest_framework.permissions.IsAuthenticated",
+        # "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+        # "oauth2_provider.ext.rest_framework.IsAuthenticatedOrTokenHasScope"
     ],
-    "PAGE_SIZE": 10
+    "PAGE_SIZE": 10,
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "oauth2_provider.ext.rest_framework.OAuth2Authentication",
+    ),
 }

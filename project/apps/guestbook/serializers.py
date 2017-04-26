@@ -1,33 +1,29 @@
 # coding: utf-8
 from rest_framework import serializers
 
-from .models import Review, Reply, CustomUser as User
+from .models import Review, Reply
 
 
-class ReviewSerializer(serializers.ModelSerializer):
-    reply_set = serializers.PrimaryKeyRelatedField(many=True, queryset=Reply.objects.all())
-    created_at = serializers.DateTimeField(format="%d.%m.%Y %H:%M:%S %Z")
+class BaseSerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(format="%d.%m.%Y %H:%M:%S %Z", read_only=True)
 
     class Meta:
-        model = Review
-        fields = ("id", "text", "author", "reply_set", "created_at")
+        abstract = True
 
 
-class ReplySerializer(serializers.ModelSerializer):
-    # review = serializers.HyperlinkedIdentityField(view_name="review-detail")
-    created_at = serializers.DateTimeField(format="%d.%m.%Y %H:%M:%S %Z")
+class ReplySerializer(BaseSerializer):
+    author = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Reply
         fields = ("id", "text", "author", "review", "created_at")
 
 
-class UserSerializer(serializers.ModelSerializer):
-
-    created_at = serializers.DateTimeField(format="%d.%m.%Y %H:%M:%S %Z")
-    review_set = serializers.PrimaryKeyRelatedField(many=True, queryset=Review.objects.all())
-    reply_set = serializers.PrimaryKeyRelatedField(many=True, queryset=Reply.objects.all())
+class ReviewSerializer(BaseSerializer):
+    # reply_set = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    reply_set = ReplySerializer(many=True, read_only=True)
+    author = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
 
     class Meta:
-        model = User
-        fields = ("id", "username", "created_at", "review_set", "reply_set")
+        model = Review
+        fields = ("id", "text", "author", "reply_set", "created_at")
