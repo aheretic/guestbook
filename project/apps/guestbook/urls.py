@@ -1,11 +1,17 @@
 # coding: utf-8
-from django.conf.urls import url
-from django.contrib.auth.views import login, logout
+from django.conf.urls import url, include
+from rest_framework import routers
 
-from .views import ReviewListView
+from guestbook import views
+
+
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r"reviews", views.ReviewViewSet)
+router.register(r"replies", views.ReplyViewSet)
+router.register(r"users", views.UserViewSet)
+
 
 urlpatterns = [
-    # url(r"^login/$", login, {"template_name": "login.html", "redirect_authenticated_user": True}, name="login"),
-    # url(r"^logout/$", logout, name="logout"),
-    url(r"^$", ReviewListView.as_view(), name="review_list"),
+    url(r"^api/", include(router.urls)),
 ]

@@ -218,10 +218,6 @@ if DEBUG:
 
 
 AUTH_USER_MODEL = "guestbook.CustomUser"
-from django.core.urlresolvers import reverse_lazy
-# LOGOUT_REDIRECT_URL = reverse_lazy("guestbook:login")
-# LOGIN_URL = reverse_lazy("guestbook:login")
-# LOGIN_REDIRECT_URL = reverse_lazy("guestbook:review_list")
 
 OAUTH2_PROVIDER = {
     "SCOPES": {"read": "Read scope", "write": "Write scope", "users": "Access to users"}

@@ -1,6 +1,4 @@
 # coding: utf-8
-from django.views.generic import ListView
-from django.db.models import Prefetch
 from django.contrib.auth import get_user_model
 
 from rest_framework.viewsets import ModelViewSet
@@ -10,11 +8,6 @@ from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope
 from .serializers import ReviewSerializer, ReplySerializer, UserSerializer
 from .models import Review, Reply
 from .permissions import IsAuthorOrReadOnly, IsThisUserOrReadOnly
-
-
-class ReviewListView(ListView):
-    queryset = Review.objects.prefetch_related(Prefetch("reply_set"))
-    paginate_by = 10
 
 
 class ReviewViewSet(ModelViewSet):
