@@ -26,7 +26,7 @@ sys.path.append(os.path.join(SOURCE_DIR, "external_apps"))
 SECRET_KEY = "(82_c00@_&adfy6!34bt!0*x%p$^)d23u8*t14hs&4!ih+t1un"
 
 # SECURITY WARNING: don"t run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
