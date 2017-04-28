@@ -1,5 +1,4 @@
 FROM nginx:1.9
-MAINTAINER Andrew Timonin <andrew@impsite.com>
 
 # Создаем пользователя
 RUN groupadd -r docker && useradd -r -g docker docker

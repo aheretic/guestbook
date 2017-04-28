@@ -1,5 +1,4 @@
 FROM postgres:9.6.2
-MAINTAINER Andrew Timonin <andrew@impsite.com>
 
 # Для удобного подключения к БД создаем пользователя
 RUN groupadd -r docker && useradd -r -g docker docker

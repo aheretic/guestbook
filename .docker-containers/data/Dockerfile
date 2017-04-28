@@ -1,5 +1,4 @@
 FROM debian:jessie
-MAINTAINER Andrew Timonin <andrew@impsite.com>
 
 # Создаем пользователя
 RUN groupadd -r docker && useradd -r -g docker docker
