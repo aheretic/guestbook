@@ -1,7 +1,7 @@
 # coding: utf-8
 from django.core.management.base import BaseCommand
 
-from oauth2_provider.models import Application, generate_client_id
+from oauth2_provider.models import Application
 from guestbook.models import CustomUser as User
 from guestbook.client_api import GuestbookAPI
 

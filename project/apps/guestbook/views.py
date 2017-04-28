@@ -28,6 +28,7 @@ class UserViewSet(ModelViewSet):
     permission_classes = (TokenHasReadWriteScope, IsThisUserOrReadOnly)
 
     def get_permissions(self):
+        # позволяем регистрироваться всем желающим
         if self.request.method == "POST":
             self.permission_classes = (AllowAny, )
 

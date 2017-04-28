@@ -6,6 +6,9 @@ from .models import Review, Reply
 
 
 class BaseSerializer(serializers.ModelSerializer):
+    """
+    Базовый для прокта сериалайзер с деволтными значениями
+    """
     created_at = serializers.DateTimeField(format="%d.%m.%Y %H:%M:%S %Z", read_only=True)
 
     class Meta:

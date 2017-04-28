@@ -3,7 +3,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-
 class BaseProjectModel(models.Model):
     """
     Базовая абстрактная модель c общими филдами для моделей проекта
