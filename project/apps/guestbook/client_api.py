@@ -12,19 +12,18 @@ class GuestbookAPI(object):
     """
     Класс клиентской API для пользования серивсом
     """
-    def __init__(self, username=None, password=None, client_id=None, client_secret=None, domain=None):
+    def __init__(self, username=None, password=None, client_id=None, client_secret=None, domain=None, scope=None):
         self.username = username or settings.GUESTBOOK_USERNAME
         self.password = password or settings.GUESTBOOK_PASSWORD
         self.client_id = client_id or settings.GUESTBOOK_CLIENT_ID
         self.client_secret = client_secret or settings.GUESTBOOK_CLIENT_SECRET
         self.domain = domain or settings.GUESTBOOK_DOMAIN
+        self.scope = scope or settings.GUESTBOOK_SCOPE
         self.request_headers = None
 
     def process_response(func):
         """
         Декоратор для обработки ответа
-        :param func: декорируемая функция
-        :return: dict ответ
         """
         def wrapper(self, *args, **kwargs):
             response = func(self, *args, **kwargs)
@@ -48,10 +47,6 @@ class GuestbookAPI(object):
     def registration(self, username=None, password=None, **kwargs):
         """
         Функция регистрации нового пользователя
-        :param username: username если не указан в conf.settings
-        :param password: password если не указан в conf.settings
-        :param kwargs: доп данные, например, email
-        :return:
         """
         data = {
             "username": username or self.username,
@@ -69,15 +64,10 @@ class GuestbookAPI(object):
         return response
 
     @process_response
-    def auth(self, username=None, password=None, client_id=None, client_secret=None):       #TODO: не забыть про scope
+    def auth(self, username=None, password=None, client_id=None, client_secret=None, scope=None):
         """
         Аутентификация пользователя
         Получаем access_token и формируем необходимый header
-        :param username: username, username если не указан в conf.settings
-        :param password: password, если не указан в conf.settings
-        :param client_id: client_id, если не указан в conf.settings
-        :param client_secret: client_secret, если не указан в conf.settings
-        :return:
         """
         response = requests.post(
             urljoin(self.domain, reverse("oauth2_provider:token")),
@@ -85,6 +75,7 @@ class GuestbookAPI(object):
                 "grant_type": "password",
                 "username": username or self.username,
                 "password": password or self.password,
+                "scope": scope or self.scope,
             },
             auth=(
                 client_id or self.client_id,

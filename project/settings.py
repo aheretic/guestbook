@@ -220,18 +220,17 @@ if DEBUG:
 AUTH_USER_MODEL = "guestbook.CustomUser"
 
 OAUTH2_PROVIDER = {
-    "SCOPES": {"read": "Read scope", "write": "Write scope", "users": "Access to users"}
+    "SCOPES": {"read": "Read scope", "write": "Write scope"}
 }
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly, IsAuthenticated
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     "DEFAULT_PERMISSION_CLASSES": [
-        # "rest_framework.permissions.IsAuthenticated",
-        # "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+        "rest_framework.permissions.IsAuthenticated",
         # "oauth2_provider.ext.rest_framework.IsAuthenticatedOrTokenHasScope"
     ],
-    "PAGE_SIZE": 10,
+    "PAGE_SIZE": 5,
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "oauth2_provider.ext.rest_framework.OAuth2Authentication",
     ),
