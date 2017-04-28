@@ -3,9 +3,8 @@ django-debug-toolbar==1.7
 djangorestframework==3.6.2
 uwsgi
 pylibmc==1.5.2
-pyinotify
 pytz
-psycopg2==2.6.1
+psycopg2==2.7.1
 ipython
-django-oauth-toolkit
-requests
+django-oauth-toolkit==0.12.0
+requests==2.13.0
