@@ -31,7 +31,7 @@ class Command(BaseCommand):
 
         user = User.objects.get(username=r["json"]["username"])
 
-        print("Пробуем повтрно зарегистрироваться с теми же данными")
+        print("Пробуем повторно зарегистрироваться с теми же данными")
         r = api.registration()
         print(r)
         print("-" * 30)
@@ -40,7 +40,8 @@ class Command(BaseCommand):
         app = Application.objects.create(
             user=user,
             authorization_grant_type=Application.GRANT_PASSWORD,
-            client_type=Application.CLIENT_CONFIDENTIAL
+            client_type=Application.CLIENT_CONFIDENTIAL,
+            name="{username}_app".format(username=user.username)
         )
         api.client_id = app.client_id
         api.client_secret = app.client_secret
