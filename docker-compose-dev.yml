@@ -37,6 +37,7 @@ web:
   expose:
     - "3031"
   links:
+    - db
     - memcached
   command: uwsgi --socket=:3031 --py-autoreload=3 --processes=2 --uid=root --gid=root --harakiri=60 --max-requests=10000 --post-buffering=8192 --chdir=/app --module=project.wsgi:application --master --pidfile=/tmp/uwsgi.pid --vacuum --die-on-term --disable-logging --logdate --log-5xx --log-slow=5000
 nginx:
