@@ -3,10 +3,12 @@
 *.orig
 *.pid
 *.sqlite3
+*.log
 *~
 .idea
 .DS_Store
 *_local.py
 /static/*
 /media/*
+/logs/*
 /.docker-env/prod
